@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="4" author="author">
+        <createTable tableName="Books">
+            <column name="book_id" type="serial">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="title" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="author_id" type="int">
+                <constraints nullable="true"/>
+            </column>
+            <column name="genre_id" type="int">
+                <constraints nullable="true"/>
+            </column>
+            <column name="published_year" type="int">
+                <constraints checkConstraint="published_year > 0"/>
+            </column>
+            <column name="price" type="decimal(10, 2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="stock" type="int" defaultValue="0">
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="5" author="author">
+        <addForeignKeyConstraint
+                constraintName="fk_books_authors"
+                baseTableName="Books"
+                baseColumnNames="author_id"
+                referencedTableName="Authors"
+                referencedColumnNames="author_id"
+                onDelete="SET NULL"/>
+    </changeSet>
+
+    <changeSet id="6" author="author">
+        <addForeignKeyConstraint
+                constraintName="fk_books_genres"
+                baseTableName="Books"
+                baseColumnNames="genre_id"
+                referencedTableName="Genres"
+                referencedColumnNames="genre_id"
+                onDelete="SET NULL"/>
+    </changeSet>
+
+</databaseChangeLog>

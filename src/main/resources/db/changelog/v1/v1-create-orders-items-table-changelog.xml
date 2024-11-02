@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="6" author="author">
+        <createTable tableName="Order_Items">
+            <column name="order_item_id" type="serial">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="order_id" type="int">
+                <constraints foreignKeyName="fk_order_items_orders" references="Orders(order_id)" deleteCascade="true"/>
+            </column>
+            <column name="book_id" type="int">
+                <constraints foreignKeyName="fk_order_items_books" references="Books(book_id)" deleteCascade="true"/>
+            </column>
+            <column name="quantity" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="price" type="decimal(10, 2)"/>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>
